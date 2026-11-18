@@ -1,0 +1,1947 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ listing.title }} | Smart Living & Workspace Finder</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #080d17;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            min-height: 76px;
+            background: #0b111d;
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 45px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: #2563eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .brand h2 {
+            font-size: 16px;
+            line-height: 1.3;
+        }
+
+        .back-btn {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .back-btn:hover {
+            color: #60a5fa;
+        }
+
+        .page {
+            max-width: 1180px;
+            margin: auto;
+            padding: 35px 25px 70px;
+        }
+
+        .breadcrumb {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 22px;
+        }
+
+        .breadcrumb a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .flash-message {
+            border-radius: 10px;
+            padding: 13px 16px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .flash-success {
+            background: rgba(34,197,94,.12);
+            color: #4ade80;
+            border: 1px solid rgba(34,197,94,.25);
+        }
+
+        .flash-error {
+            background: rgba(239,68,68,.12);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,.25);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.7fr .8fr;
+            gap: 25px;
+        }
+
+        .left-side {
+            min-width: 0;
+        }
+
+        .property-image {
+            width: 100%;
+            height: 430px;
+            background: #101827;
+            border: 1px solid #1e293b;
+            border-radius: 17px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #64748b;
+        }
+
+        .no-image i {
+            font-size: 45px;
+            color: #60a5fa;
+        }
+
+        .property-card,
+        .side-card {
+            background: #101827;
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 27px;
+        }
+
+        .property-card {
+            margin-bottom: 20px;
+        }
+
+        .side-card {
+            position: sticky;
+            top: 25px;
+            padding: 25px;
+        }
+
+        .title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+
+        .property-title {
+            font-size: 27px;
+            line-height: 1.3;
+        }
+
+        .available,
+        .unavailable {
+            white-space: nowrap;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .available {
+            background: rgba(34,197,94,.12);
+            color: #4ade80;
+        }
+
+        .unavailable {
+            background: rgba(239,68,68,.12);
+            color: #f87171;
+        }
+
+        .location {
+            color: #94a3b8;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .location i,
+        .section-title i {
+            color: #60a5fa;
+        }
+
+        .tags,
+        .facilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .tag {
+            background: #172033;
+            color: #93c5fd;
+            border: 1px solid #253149;
+            border-radius: 7px;
+            padding: 7px 11px;
+            font-size: 11px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .facility {
+            background: #0b1220;
+            border: 1px solid #253149;
+            border-radius: 8px;
+            color: #cbd5e1;
+            padding: 9px 12px;
+            font-size: 12px;
+        }
+
+        .facility i {
+            color: #4ade80;
+            margin-right: 5px;
+        }
+
+        .price-label {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .price {
+            color: #60a5fa;
+            font-size: 29px;
+            font-weight: 800;
+        }
+
+        .price span {
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .divider {
+            height: 1px;
+            background: #1e293b;
+            margin: 22px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 16px;
+            font-size: 12px;
+        }
+
+        .detail-label {
+            color: #64748b;
+        }
+
+        .detail-value {
+            color: #cbd5e1;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .owner-box {
+            background: #0b1220;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .owner-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #172554;
+            color: #60a5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .owner-small {
+            color: #64748b;
+            font-size: 10px;
+            margin-bottom: 3px;
+        }
+
+        .owner-name {
+            color: #e2e8f0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .booking-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .booking-title i {
+            color: #60a5fa;
+        }
+
+        .booking-field {
+            margin-bottom: 14px;
+        }
+
+        .booking-field label {
+            display: block;
+            color: #94a3b8;
+            font-size: 11px;
+            margin-bottom: 7px;
+        }
+
+        .booking-field input,
+        .amount-input input {
+            width: 100%;
+            background: #0b1220;
+            border: 1px solid #253149;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 11px 12px;
+            font-family: inherit;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .booking-field input:focus,
+        .amount-input input:focus {
+            border-color: #3b82f6;
+        }
+
+        .payment-heading {
+            color: #e2e8f0;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 19px 0 10px;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .payment-option {
+            position: relative;
+        }
+
+        .payment-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .payment-option label {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            background: #0b1220;
+            border: 1px solid #253149;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        .payment-option input[type="radio"]:checked + label {
+            border-color: #3b82f6;
+            background: rgba(37,99,235,.10);
+        }
+
+        .payment-radio {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            border: 2px solid #475569;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-option input:checked + label .payment-radio {
+            border-color: #3b82f6;
+        }
+
+        .payment-option input:checked + label .payment-radio::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #3b82f6;
+        }
+
+        .payment-icon {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            border-radius: 8px;
+            background: #172554;
+            color: #60a5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-info {
+            flex: 1;
+        }
+
+        .payment-name {
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .payment-description {
+            color: #64748b;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .payment-amount {
+            color: #93c5fd;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .advance-box {
+            display: none;
+            background: #0b1220;
+            border: 1px solid #253149;
+            border-radius: 10px;
+            padding: 13px;
+            margin-top: 10px;
+        }
+
+        .advance-box.show {
+            display: block;
+        }
+
+        .advance-box label {
+            display: block;
+            color: #94a3b8;
+            font-size: 10px;
+            margin-bottom: 7px;
+        }
+
+        .amount-input {
+            position: relative;
+        }
+
+        .amount-input span {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .amount-input input {
+            padding-left: 28px;
+        }
+
+        .advance-help {
+            color: #64748b;
+            font-size: 10px;
+            line-height: 1.6;
+            margin-top: 7px;
+        }
+
+        .selected-summary {
+            background: rgba(37,99,235,.08);
+            border: 1px solid rgba(59,130,246,.20);
+            border-radius: 9px;
+            padding: 11px 12px;
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .selected-summary span {
+            color: #94a3b8;
+            font-size: 10px;
+        }
+
+        .selected-summary strong {
+            color: #93c5fd;
+            font-size: 12px;
+        }
+
+        .book-btn,
+        .payment-btn,
+        .review-submit {
+            width: 100%;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 13px 16px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 13px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .book-btn {
+            background: #2563eb;
+            display: flex;
+        }
+
+        .payment-btn {
+            background: #16a34a;
+            display: none;
+        }
+
+        .payment-btn.show {
+            display: flex;
+        }
+
+        .payment-btn:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+        }
+
+        .booking-note,
+        .payment-security,
+        .direction-note {
+            color: #64748b;
+            font-size: 10px;
+            line-height: 1.6;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .payment-security i {
+            color: #4ade80;
+        }
+
+        .login-booking-box,
+        .unavailable-box {
+            background: #0b1220;
+            border: 1px solid #253149;
+            border-radius: 9px;
+            padding: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .login-booking-box p {
+            color: #94a3b8;
+            font-size: 11px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .login-booking-box a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .unavailable-box {
+            color: #f87171;
+            font-size: 11px;
+        }
+
+        .directions-btn,
+        .edit-owner-btn {
+            width: 100%;
+            background: #172033;
+            color: #cbd5e1;
+            border: 1px solid #293548;
+            border-radius: 9px;
+            padding: 12px 16px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .directions-btn:hover,
+        .edit-owner-btn:hover {
+            border-color: #3b82f6;
+            color: #60a5fa;
+        }
+
+        /* REVIEWS AND RATINGS */
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 20px;
+            background: #0b1220;
+            border: 1px solid #253149;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .rating-number {
+            color: #ffffff;
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .rating-stars {
+            color: #fbbf24;
+            font-size: 18px;
+            letter-spacing: 3px;
+            margin: 6px 0;
+        }
+
+        .rating-count {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .rating-divider {
+            width: 1px;
+            height: 65px;
+            background: #253149;
+        }
+
+        .rating-message {
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .review-form {
+            background: #0b1220;
+            border: 1px solid #253149;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .review-form h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .review-form p {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+
+        .star-picker {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 7px;
+            margin-bottom: 18px;
+        }
+
+        .star-picker input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .star-picker label {
+            color: #475569;
+            font-size: 31px;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .star-picker label:hover,
+        .star-picker label:hover ~ label,
+        .star-picker input:checked ~ label {
+            color: #fbbf24;
+        }
+
+        .review-form textarea {
+            width: 100%;
+            min-height: 115px;
+            resize: vertical;
+            background: #080d17;
+            border: 1px solid #253149;
+            border-radius: 9px;
+            color: #e2e8f0;
+            padding: 13px;
+            font-family: inherit;
+            font-size: 12px;
+            outline: none;
+            line-height: 1.7;
+        }
+
+        .review-form textarea:focus {
+            border-color: #3b82f6;
+        }
+
+        .review-submit {
+            background: #2563eb;
+        }
+
+        .review-submit:hover {
+            background: #1d4ed8;
+        }
+
+        .review-notice {
+            background: #0b1220;
+            border: 1px solid #253149;
+            border-radius: 10px;
+            padding: 15px;
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .review-notice i {
+            color: #60a5fa;
+            margin-right: 5px;
+        }
+
+        .review-list-title {
+            font-size: 15px;
+            margin-bottom: 17px;
+        }
+
+        .review-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #253149;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .review-person {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            background: #172554;
+            color: #93c5fd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .review-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .review-date {
+            color: #64748b;
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .review-item-stars {
+            color: #fbbf24;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .review-comment {
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .no-reviews {
+            color: #64748b;
+            font-size: 12px;
+            text-align: center;
+            padding: 25px 10px;
+        }
+
+        /* SUCCESS POPUP */
+
+        .success-popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3,7,18,.82);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 99999;
+        }
+
+        .success-popup {
+            width: 100%;
+            max-width: 420px;
+            background: #101827;
+            border: 1px solid #253149;
+            border-radius: 18px;
+            padding: 32px 28px;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(0,0,0,.55);
+        }
+
+        .success-popup-icon {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: rgba(34,197,94,.12);
+            color: #4ade80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .success-popup h2 {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .success-popup p {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .success-popup-btn {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 13px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+        }
+
+        @media (max-width: 850px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .property-image {
+                height: 320px;
+            }
+
+            .side-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .page {
+                padding: 25px 15px 50px;
+            }
+
+            .property-image {
+                height: 240px;
+            }
+
+            .property-card,
+            .side-card {
+                padding: 20px;
+            }
+
+            .title-row {
+                flex-direction: column;
+            }
+
+            .property-title {
+                font-size: 22px;
+            }
+
+            .back-btn span {
+                display: none;
+            }
+
+            .rating-summary {
+                gap: 14px;
+                padding: 15px;
+            }
+
+            .rating-number {
+                font-size: 34px;
+            }
+
+            .rating-stars {
+                font-size: 14px;
+            }
+
+            .payment-option label {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="brand">
+        <div class="brand-icon">
+            <i class="bi bi-buildings"></i>
+        </div>
+        <h2>Smart Living &<br>Workspace Finder</h2>
+    </a>
+
+    {% if session.get("role") == "owner" %}
+        <a href="{{ url_for('owner_dashboard') }}" class="back-btn">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to Dashboard</span>
+        </a>
+    {% elif session.get("role") == "user" %}
+        <a href="{{ url_for('dashboard') }}" class="back-btn">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to Dashboard</span>
+        </a>
+    {% else %}
+        <a href="/" class="back-btn">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+    {% endif %}
+</header>
+
+<main class="page">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash-message {{ 'flash-success' if category == 'success' else 'flash-error' }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <div class="breadcrumb">
+        <a href="/">Home</a>
+        &nbsp;/&nbsp;
+        {{ listing.listing_type | title }}
+        &nbsp;/&nbsp;
+        {{ listing.title }}
+    </div>
+
+    <div class="main-grid">
+
+        <div class="left-side">
+
+            <!-- PROPERTY IMAGE -->
+
+            <div class="property-image">
+                {% if listing.image_path %}
+                    <img
+                        src="{{ url_for('static', filename=listing.image_path) }}"
+                        alt="{{ listing.title }}"
+                    >
+                {% else %}
+                    <div class="no-image">
+                        <i class="bi bi-building"></i>
+                        <span>No property image available</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- PROPERTY INFORMATION -->
+
+            <section class="property-card">
+                <div class="title-row">
+                    <h1 class="property-title">{{ listing.title }}</h1>
+
+                    {% if listing.availability %}
+                        <span class="available">
+                            <i class="bi bi-check-circle"></i>
+                            Available
+                        </span>
+                    {% else %}
+                        <span class="unavailable">
+                            <i class="bi bi-x-circle"></i>
+                            Unavailable
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="location">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    {{ listing.location }}
+                </div>
+
+                <div class="tags">
+                    <span class="tag">{{ listing.property_type }}</span>
+                    <span class="tag">{{ listing.listing_type | title }}</span>
+
+                    {% if review_count > 0 %}
+                        <span class="tag">
+                            <i class="bi bi-star-fill" style="color:#fbbf24"></i>
+                            {{ average_rating }} ({{ review_count }} reviews)
+                        </span>
+                    {% endif %}
+                </div>
+            </section>
+
+            <!-- DESCRIPTION -->
+
+            <section class="property-card">
+                <h2 class="section-title">
+                    <i class="bi bi-card-text"></i>
+                    About this property
+                </h2>
+
+                <p class="description">
+                    {{ listing.description or "No description has been added for this property." }}
+                </p>
+            </section>
+
+            <!-- FACILITIES -->
+
+            <section class="property-card">
+                <h2 class="section-title">
+                    <i class="bi bi-stars"></i>
+                    Facilities
+                </h2>
+
+                {% if listing.facilities %}
+                    <div class="facilities">
+                        {% for facility in listing.facilities.split(',') %}
+                            {% if facility.strip() %}
+                                <span class="facility">
+                                    <i class="bi bi-check-circle"></i>
+                                    {{ facility.strip() }}
+                                </span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="description">No facilities have been added.</p>
+                {% endif %}
+            </section>
+
+            <!-- REVIEWS AND RATINGS -->
+
+            <section class="property-card" id="reviews">
+
+                <h2 class="section-title">
+                    <i class="bi bi-star-fill"></i>
+                    Reviews & Ratings
+                </h2>
+
+                <div class="rating-summary">
+                    <div>
+                        <div class="rating-number">
+                            {{ average_rating if review_count > 0 else "0.0" }}
+                            <span style="font-size:15px;color:#64748b">/ 5</span>
+                        </div>
+
+                        <div class="rating-stars">
+                            {% for star in range(1, 6) %}
+                                {% if star <= average_rating %}
+                                    <i class="bi bi-star-fill"></i>
+                                {% elif star - average_rating < 1 %}
+                                    <i class="bi bi-star-half"></i>
+                                {% else %}
+                                    <i class="bi bi-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="rating-count">
+                            {{ review_count }}
+                            {{ "review" if review_count == 1 else "reviews" }}
+                        </div>
+                    </div>
+
+                    <div class="rating-divider"></div>
+
+                    <div class="rating-message">
+                        {% if review_count > 0 %}
+                            Ratings shared by customers who have booked this property.
+                        {% else %}
+                            No ratings yet. Be the first eligible customer to review this property.
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- REVIEW SUBMISSION -->
+
+                {% if session.get("role") == "user" %}
+
+                    {% if user_review %}
+
+                        <div class="review-notice">
+                            <i class="bi bi-check-circle-fill"></i>
+                            You have already submitted a review for this property.
+                            Thank you for sharing your experience!
+                        </div>
+
+                    {% elif can_review %}
+
+                        <form
+                            action="{{ url_for('add_review', listing_id=listing.listing_id) }}"
+                            method="POST"
+                            class="review-form"
+                        >
+                            <h3>Write a Review</h3>
+
+                            <p>
+                                Share your experience and help others choose the right property.
+                            </p>
+
+                            <div class="star-picker">
+                                {% for star in range(5, 0, -1) %}
+                                    <input
+                                        type="radio"
+                                        id="rating{{ star }}"
+                                        name="rating"
+                                        value="{{ star }}"
+                                        required
+                                    >
+                                    <label for="rating{{ star }}" title="{{ star }} stars">
+                                        <i class="bi bi-star-fill"></i>
+                                    </label>
+                                {% endfor %}
+                            </div>
+
+                            <textarea
+                                name="comment"
+                                maxlength="1000"
+                                placeholder="Tell us about your experience with this property..."
+                            ></textarea>
+
+                            <button type="submit" class="review-submit">
+                                <i class="bi bi-send"></i>
+                                Submit Review
+                            </button>
+                        </form>
+
+                    {% else %}
+
+                        <div class="review-notice">
+                            <i class="bi bi-info-circle"></i>
+                            You can submit a review after you have a confirmed or completed booking for this property.
+                        </div>
+
+                    {% endif %}
+
+                {% elif not session.get("user_id") %}
+
+                    <div class="review-notice">
+                        <i class="bi bi-person-circle"></i>
+                        <a href="{{ url_for('login') }}" style="color:#60a5fa">
+                            Login
+                        </a>
+                        to view your review eligibility and submit a review.
+                    </div>
+
+                {% endif %}
+
+                <!-- CUSTOMER REVIEWS -->
+
+                <h3 class="review-list-title">
+                    Customer Reviews ({{ review_count }})
+                </h3>
+
+                {% if reviews %}
+
+                    {% for review in reviews %}
+
+                        <div class="review-item">
+
+                            <div class="review-header">
+
+                                <div class="review-person">
+
+                                    <div class="review-avatar">
+                                        {{ review.full_name[0] | upper }}
+                                    </div>
+
+                                    <div>
+                                        <div class="review-name">
+                                            {{ review.full_name }}
+                                        </div>
+
+                                        <div class="review-date">
+                                            {{ review.created_at.strftime('%d %B %Y') if review.created_at else '' }}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="review-item-stars">
+                                    {% for star in range(1, 6) %}
+                                        {% if star <= review.rating %}
+                                            <i class="bi bi-star-fill"></i>
+                                        {% else %}
+                                            <i class="bi bi-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+
+                            {% if review.comment %}
+                                <p class="review-comment">{{ review.comment }}</p>
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="no-reviews">
+                        <i class="bi bi-chat-square-text" style="font-size:28px;display:block;margin-bottom:12px"></i>
+                        No customer reviews available yet.
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        </div>
+
+        <!-- SIDEBAR -->
+
+        <aside>
+            <div class="side-card">
+
+                <p class="price-label">Price</p>
+
+                <div class="price">
+                    ₹{{ listing.price }}
+                    <span>/ {{ listing.price_period }}</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Property Type</span>
+                    <span class="detail-value">{{ listing.property_type }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Category</span>
+                    <span class="detail-value">{{ listing.listing_type | title }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Availability</span>
+                    <span class="detail-value">
+                        {{ "Available" if listing.availability else "Unavailable" }}
+                    </span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="owner-box">
+                    <div class="owner-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                    <div>
+                        <div class="owner-small">LISTED BY</div>
+                        <div class="owner-name">{{ listing.owner_name }}</div>
+                    </div>
+                </div>
+
+                {% if session.get("role") == "owner" and session.get("user_id") == listing.owner_id %}
+
+                    <a
+                        href="{{ url_for('edit_listing', listing_id=listing.listing_id) }}"
+                        class="edit-owner-btn"
+                    >
+                        <i class="bi bi-pencil"></i>
+                        Edit Property
+                    </a>
+
+                {% else %}
+
+                    {% if session.get("role") == "user" %}
+
+                        {% if listing.availability %}
+
+                            <div class="booking-title">
+                                <i class="bi bi-calendar-check"></i>
+                                Book This Property
+                            </div>
+
+                            <form
+                                action="{{ url_for('book_listing', listing_id=listing.listing_id) }}"
+                                method="POST"
+                                id="bookingForm"
+                            >
+
+                                <div class="booking-field">
+                                    <label for="start_date">Start Date</label>
+                                    <input
+                                        type="date"
+                                        id="start_date"
+                                        name="start_date"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="booking-field">
+                                    <label for="end_date">End Date</label>
+                                    <input
+                                        type="date"
+                                        id="end_date"
+                                        name="end_date"
+                                    >
+                                </div>
+
+                                <div class="payment-heading">
+                                    Choose Booking Option
+                                </div>
+
+                                <div class="payment-options">
+
+                                    <div class="payment-option">
+                                        <input
+                                            type="radio"
+                                            name="payment_choice"
+                                            id="requestOnly"
+                                            value="request"
+                                            checked
+                                        >
+
+                                        <label for="requestOnly">
+                                            <span class="payment-radio"></span>
+
+                                            <span class="payment-icon">
+                                                <i class="bi bi-calendar2-check"></i>
+                                            </span>
+
+                                            <span class="payment-info">
+                                                <span class="payment-name">
+                                                    Book Without Payment
+                                                </span>
+
+                                                <span class="payment-description">
+                                                    Send a booking request only.
+                                                    Property is not reserved.
+                                                </span>
+                                            </span>
+
+                                            <span class="payment-amount">₹0</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="payment-option">
+                                        <input
+                                            type="radio"
+                                            name="payment_choice"
+                                            id="advancePayment"
+                                            value="advance"
+                                        >
+
+                                        <label for="advancePayment">
+                                            <span class="payment-radio"></span>
+
+                                            <span class="payment-icon">
+                                                <i class="bi bi-wallet2"></i>
+                                            </span>
+
+                                            <span class="payment-info">
+                                                <span class="payment-name">
+                                                    Pay Advance
+                                                </span>
+
+                                                <span class="payment-description">
+                                                    Pay at least 20% to reserve this property.
+                                                </span>
+                                            </span>
+
+                                            <span class="payment-amount" id="minimumAdvanceText"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="payment-option">
+                                        <input
+                                            type="radio"
+                                            name="payment_choice"
+                                            id="fullPayment"
+                                            value="full"
+                                        >
+
+                                        <label for="fullPayment">
+                                            <span class="payment-radio"></span>
+
+                                            <span class="payment-icon">
+                                                <i class="bi bi-credit-card"></i>
+                                            </span>
+
+                                            <span class="payment-info">
+                                                <span class="payment-name">
+                                                    Full Payment
+                                                </span>
+
+                                                <span class="payment-description">
+                                                    Pay the complete listed amount and reserve immediately.
+                                                </span>
+                                            </span>
+
+                                            <span class="payment-amount" id="fullPaymentText"></span>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="advance-box" id="advanceBox">
+                                    <label for="advanceAmount">Enter Advance Amount</label>
+
+                                    <div class="amount-input">
+                                        <span>₹</span>
+                                        <input
+                                            type="number"
+                                            id="advanceAmount"
+                                            name="advance_amount"
+                                            step="0.01"
+                                        >
+                                    </div>
+
+                                    <div class="advance-help" id="advanceHelp"></div>
+                                </div>
+
+                                <div class="selected-summary">
+                                    <span>Amount to Pay Now</span>
+                                    <strong id="selectedAmount">₹0</strong>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    class="book-btn"
+                                    id="requestButton"
+                                >
+                                    <i class="bi bi-calendar-check"></i>
+                                    Book Without Payment (₹0)
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="payment-btn"
+                                    id="paymentButton"
+                                >
+                                    <i class="bi bi-shield-check"></i>
+                                    <span id="paymentButtonText">
+                                        Continue to Payment
+                                    </span>
+                                </button>
+
+                                <p class="booking-note" id="bookingNote">
+                                    This is a booking request only.
+                                    The property is not reserved until a payment is completed.
+                                </p>
+
+                                <p
+                                    class="payment-security"
+                                    id="paymentSecurity"
+                                    style="display:none"
+                                >
+                                    <i class="bi bi-lock-fill"></i>
+                                    Secure payment powered by Razorpay Test Mode
+                                </p>
+
+                            </form>
+
+                        {% else %}
+
+                            <div class="unavailable-box">
+                                <i class="bi bi-x-circle"></i>
+                                This property is currently unavailable for booking.
+                            </div>
+
+                        {% endif %}
+
+                    {% elif not session.get("user_id") %}
+
+                        {% if listing.availability %}
+                            <div class="login-booking-box">
+                                <p>Login to send a booking request for this property.</p>
+                                <a href="{{ url_for('login') }}">Login to Book</a>
+                            </div>
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% if listing.map_link %}
+                        <a
+                            href="{{ listing.map_link }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="directions-btn"
+                        >
+                            <i class="bi bi-geo-alt"></i>
+                            Get Directions
+                        </a>
+
+                        <p class="direction-note">
+                            Opens the property location in Google Maps.
+                        </p>
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
+        </aside>
+
+    </div>
+
+</main>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    const startDate = document.getElementById("start_date");
+    const endDate = document.getElementById("end_date");
+
+    const propertyPrice = Number("{{ listing.price }}");
+    const minimumAdvance = Math.round(propertyPrice * 20) / 100;
+
+    const requestOnly = document.getElementById("requestOnly");
+    const advancePayment = document.getElementById("advancePayment");
+    const fullPayment = document.getElementById("fullPayment");
+
+    const advanceBox = document.getElementById("advanceBox");
+    const advanceAmount = document.getElementById("advanceAmount");
+    const minimumAdvanceText = document.getElementById("minimumAdvanceText");
+    const fullPaymentText = document.getElementById("fullPaymentText");
+    const advanceHelp = document.getElementById("advanceHelp");
+    const selectedAmount = document.getElementById("selectedAmount");
+
+    const requestButton = document.getElementById("requestButton");
+    const paymentButton = document.getElementById("paymentButton");
+    const paymentButtonText = document.getElementById("paymentButtonText");
+    const bookingNote = document.getElementById("bookingNote");
+    const paymentSecurity = document.getElementById("paymentSecurity");
+
+    function formatMoney(amount) {
+        return new Intl.NumberFormat("en-IN", {
+            maximumFractionDigits: 2
+        }).format(amount);
+    }
+
+    if (startDate) {
+        const today = new Date();
+        const todayValue =
+            today.getFullYear() + "-" +
+            String(today.getMonth() + 1).padStart(2, "0") + "-" +
+            String(today.getDate()).padStart(2, "0");
+
+        startDate.min = todayValue;
+
+        if (endDate) {
+            endDate.min = todayValue;
+        }
+
+        startDate.addEventListener("change", function () {
+            if (!endDate) return;
+
+            endDate.min = this.value;
+
+            if (endDate.value && endDate.value < this.value) {
+                endDate.value = "";
+            }
+        });
+    }
+
+    if (minimumAdvanceText) {
+        minimumAdvanceText.textContent =
+            "From ₹" + formatMoney(minimumAdvance);
+    }
+
+    if (fullPaymentText) {
+        fullPaymentText.textContent =
+            "₹" + formatMoney(propertyPrice);
+    }
+
+    if (advanceAmount) {
+        advanceAmount.min = minimumAdvance;
+        advanceAmount.max = propertyPrice;
+        advanceAmount.value = minimumAdvance;
+    }
+
+    if (advanceHelp) {
+        advanceHelp.textContent =
+            "Minimum ₹" + formatMoney(minimumAdvance) +
+            " (20%) • Maximum ₹" + formatMoney(propertyPrice);
+    }
+
+    function updateAdvanceAmount() {
+        if (!advanceAmount) return;
+
+        const amount = Number(advanceAmount.value);
+
+        if (selectedAmount) {
+            selectedAmount.textContent = "₹" + formatMoney(amount);
+        }
+
+        if (paymentButtonText) {
+            paymentButtonText.textContent =
+                "Pay ₹" + formatMoney(amount);
+        }
+    }
+
+    function updatePaymentOption() {
+        if (!requestOnly) return;
+
+        const isRequest = requestOnly.checked;
+        const isAdvance = advancePayment.checked;
+
+        advanceBox.classList.toggle("show", isAdvance);
+        requestButton.style.display = isRequest ? "flex" : "none";
+        paymentButton.classList.toggle("show", !isRequest);
+        paymentSecurity.style.display = isRequest ? "none" : "block";
+
+        if (isRequest) {
+            selectedAmount.textContent = "₹0";
+
+            bookingNote.textContent =
+                "This is a booking request only. " +
+                "The property is not reserved until payment.";
+        } else if (isAdvance) {
+            if (
+                !advanceAmount.value ||
+                Number(advanceAmount.value) < minimumAdvance
+            ) {
+                advanceAmount.value = minimumAdvance;
+            }
+
+            updateAdvanceAmount();
+
+            bookingNote.textContent =
+                "A successful payment of at least 20% " +
+                "will reserve the property.";
+        } else {
+            selectedAmount.textContent =
+                "₹" + formatMoney(propertyPrice);
+
+            paymentButtonText.textContent =
+                "Pay ₹" + formatMoney(propertyPrice);
+
+            bookingNote.textContent =
+                "Full payment will reserve the property " +
+                "after payment verification.";
+        }
+    }
+
+    [requestOnly, advancePayment, fullPayment].forEach(option => {
+        if (option) {
+            option.addEventListener("change", updatePaymentOption);
+        }
+    });
+
+    if (advanceAmount) {
+        advanceAmount.addEventListener("input", updateAdvanceAmount);
+
+        advanceAmount.addEventListener("blur", function () {
+            let amount = Number(this.value);
+
+            if (!Number.isFinite(amount) || amount < minimumAdvance) {
+                amount = minimumAdvance;
+            }
+
+            if (amount > propertyPrice) {
+                amount = propertyPrice;
+            }
+
+            this.value = amount;
+            updateAdvanceAmount();
+        });
+    }
+
+    function resetPaymentButton() {
+        if (!paymentButton) return;
+
+        paymentButton.disabled = false;
+        updatePaymentOption();
+    }
+
+    function showBookingSuccessPopup() {
+        const overlay = document.createElement("div");
+        overlay.className = "success-popup-overlay";
+
+        overlay.innerHTML = `
+            <div class="success-popup">
+                <div class="success-popup-icon">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+
+                <h2>Booking Confirmed!</h2>
+
+                <p>
+                    Your payment was successful and the property
+                    has been reserved for you.
+                </p>
+
+                <button type="button"
+                        class="success-popup-btn"
+                        id="viewBookingsButton">
+                    <i class="bi bi-calendar-check"></i>
+                    View My Bookings
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        document.getElementById("viewBookingsButton")
+            .addEventListener("click", function () {
+                window.location.href = "{{ url_for('my_bookings') }}";
+            });
+    }
+
+    if (paymentButton) {
+        paymentButton.addEventListener("click", async function () {
+            if (!startDate || !startDate.value) {
+                alert("Please select a start date first.");
+                return;
+            }
+
+            if (
+                endDate &&
+                endDate.value &&
+                endDate.value < startDate.value
+            ) {
+                alert("End date cannot be before start date.");
+                return;
+            }
+
+            let paymentType;
+            let paymentAmount;
+
+            if (advancePayment.checked) {
+                paymentType = "advance";
+                paymentAmount = Number(advanceAmount.value);
+
+                if (
+                    !Number.isFinite(paymentAmount) ||
+                    paymentAmount < minimumAdvance ||
+                    paymentAmount >= propertyPrice
+                ) {
+                    alert(
+                        "Advance must be at least ₹" +
+                        formatMoney(minimumAdvance) +
+                        " and less than the full price."
+                    );
+                    return;
+                }
+            } else if (fullPayment.checked) {
+                paymentType = "full";
+                paymentAmount = propertyPrice;
+            } else {
+                return;
+            }
+
+            paymentButton.disabled = true;
+            paymentButtonText.textContent = "Creating Payment...";
+
+            const formData = new FormData();
+            formData.append("start_date", startDate.value);
+            formData.append("end_date", endDate ? endDate.value : "");
+            formData.append("payment_type", paymentType);
+            formData.append("amount", paymentAmount);
+
+            try {
+                const response = await fetch(
+                    "{{ url_for('create_payment_order', listing_id=listing.listing_id) }}",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    alert(data.message || "Unable to create payment order.");
+                    resetPaymentButton();
+                    return;
+                }
+
+                if (typeof Razorpay === "undefined") {
+                    alert("Payment gateway could not load.");
+                    resetPaymentButton();
+                    return;
+                }
+
+                const options = {
+                    key: data.key_id,
+                    amount: data.amount,
+                    currency: data.currency,
+                    name: "Smart Living & Workspace Finder",
+                    description: data.property_title,
+                    order_id: data.order_id,
+
+                    handler: async function (paymentResponse) {
+                        paymentButtonText.textContent = "Verifying Payment...";
+
+                        try {
+                            const verifyResponse = await fetch(
+                                "{{ url_for('verify_payment') }}",
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        booking_id: data.booking_id,
+                                        razorpay_payment_id:
+                                            paymentResponse.razorpay_payment_id,
+                                        razorpay_order_id:
+                                            paymentResponse.razorpay_order_id,
+                                        razorpay_signature:
+                                            paymentResponse.razorpay_signature
+                                    })
+                                }
+                            );
+
+                            const verifyData = await verifyResponse.json();
+
+                            if (!verifyResponse.ok || !verifyData.success) {
+                                alert(
+                                    verifyData.message ||
+                                    "Payment verification failed. " +
+                                    "Please check My Bookings before paying again."
+                                );
+                                resetPaymentButton();
+                                return;
+                            }
+
+                            showBookingSuccessPopup();
+
+                        } catch (error) {
+                            console.error(error);
+
+                            alert(
+                                "Payment may have succeeded, but verification " +
+                                "could not be completed. Please do not pay again."
+                            );
+
+                            resetPaymentButton();
+                        }
+                    },
+
+                    modal: {
+                        ondismiss: function () {
+                            resetPaymentButton();
+                        }
+                    },
+
+                    theme: {
+                        color: "#2563eb"
+                    }
+                };
+
+                const checkout = new Razorpay(options);
+                checkout.open();
+
+            } catch (error) {
+                console.error(error);
+                alert("Unable to connect to the payment gateway.");
+                resetPaymentButton();
+            }
+        });
+    }
+
+    updatePaymentOption();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Listing | Smart Living & Workspace Finder</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #080d17;
+            color: #f8fafc;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: #0b111d;
+            border-right: 1px solid #1d293b;
+            padding: 25px 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            font-size: 20px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .menu-title {
+            color: #4f5d73;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            margin: 0 12px 12px;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 13px;
+            color: #8492a7;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 9px;
+            transition: 0.25s;
+        }
+
+        .menu a i {
+            font-size: 17px;
+        }
+
+        .menu a:hover {
+            background: #111c2d;
+            color: white;
+        }
+
+        .menu a.active {
+            background: rgba(37, 99, 235, 0.13);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.12);
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .logout {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 13px;
+            color: #8492a7;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 9px;
+        }
+
+        .logout:hover {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .main {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 76px;
+            padding: 0 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(8, 13, 23, 0.93);
+            border-bottom: 1px solid #1b2535;
+        }
+
+        .page-title h2 {
+            font-size: 17px;
+            margin-bottom: 4px;
+        }
+
+        .page-title p {
+            color: #66758c;
+            font-size: 10px;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .user-avatar {
+            width: 39px;
+            height: 39px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(96, 165, 250, 0.18);
+            color: #60a5fa;
+            font-size: 18px;
+        }
+
+        .user-details strong {
+            display: block;
+            font-size: 11px;
+        }
+
+        .user-details span {
+            color: #66758c;
+            font-size: 9px;
+        }
+
+        .content {
+            padding: 35px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: #8492a7;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            color: #60a5fa;
+        }
+
+        .form-card {
+            max-width: 950px;
+            background: #101827;
+            border: 1px solid #1d293b;
+            border-radius: 17px;
+            padding: 30px;
+        }
+
+        .form-heading {
+            padding-bottom: 22px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #202b3d;
+        }
+
+        .form-heading h2 {
+            font-size: 19px;
+            margin-bottom: 7px;
+        }
+
+        .form-heading p {
+            color: #718096;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .required {
+            color: #60a5fa;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 14px;
+            background: #0b111d;
+            border: 1px solid #263246;
+            border-radius: 9px;
+            outline: none;
+            color: #e5edf8;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            transition: 0.25s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #4f5d73;
+        }
+
+        .form-group select option {
+            background: #101827;
+            color: white;
+        }
+
+        .form-group textarea {
+            min-height: 115px;
+            resize: vertical;
+        }
+
+        .small-text {
+            color: #59677c;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .image-box {
+            padding: 18px;
+            background: #0b111d;
+            border: 1px dashed #33435a;
+            border-radius: 10px;
+        }
+
+        .image-box input {
+            border: none;
+            padding: 0;
+            background: transparent;
+        }
+
+        input[type="file"]::file-selector-button {
+            border: none;
+            background: #17243a;
+            color: #93c5fd;
+            padding: 9px 13px;
+            margin-right: 12px;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .availability-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 14px;
+            background: #0b111d;
+            border: 1px solid #263246;
+            border-radius: 9px;
+        }
+
+        .availability-box input {
+            width: auto;
+            accent-color: #2563eb;
+        }
+
+        .availability-box label {
+            cursor: pointer;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 11px;
+            margin-top: 28px;
+            padding-top: 23px;
+            border-top: 1px solid #202b3d;
+        }
+
+        .cancel-button {
+            padding: 12px 19px;
+            background: #151f2f;
+            border: 1px solid #2b374a;
+            border-radius: 9px;
+            color: #a7b3c5;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .cancel-button:hover {
+            color: white;
+            border-color: #43526a;
+        }
+
+        .submit-button {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .submit-button:hover {
+            background: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+            .content {
+                padding: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .user-details {
+                display: none;
+            }
+
+            .form-buttons {
+                flex-direction: column-reverse;
+            }
+
+            .cancel-button,
+            .submit-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<aside class="sidebar">
+
+    <a href="/" class="logo">
+
+        <div class="logo-icon">
+            <i class="bi bi-buildings"></i>
+        </div>
+
+        <div>
+            Smart Living
+            <br>
+            <span>& Workspace Finder</span>
+        </div>
+
+    </a>
+
+
+    <div class="menu-title">
+        OWNER MENU
+    </div>
+
+
+    <nav class="menu">
+
+        <a href="/owner/dashboard">
+            <i class="bi bi-grid"></i>
+            Dashboard
+        </a>
+
+        <a href="/owner/add-listing" class="active">
+            <i class="bi bi-plus-square"></i>
+            Add Listing
+        </a>
+
+        <a href="#">
+            <i class="bi bi-buildings"></i>
+            My Listings
+        </a>
+
+        <a href="#">
+            <i class="bi bi-calendar-check"></i>
+            Booking Requests
+        </a>
+
+        <a href="#">
+            <i class="bi bi-star"></i>
+            Reviews
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="menu-title">
+            ACCOUNT
+        </div>
+
+        <nav class="menu">
+
+            <a href="#">
+                <i class="bi bi-person"></i>
+                My Profile
+            </a>
+
+        </nav>
+
+        <a href="/logout" class="logout">
+            <i class="bi bi-box-arrow-right"></i>
+            Logout
+        </a>
+
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+
+    <header class="topbar">
+
+        <div class="page-title">
+
+            <h2>Add New Listing</h2>
+
+            <p>
+                Add an accommodation or workspace
+            </p>
+
+        </div>
+
+
+        <div class="user-area">
+
+            <div class="user-avatar">
+                <i class="bi bi-person"></i>
+            </div>
+
+            <div class="user-details">
+
+                <strong>
+                    {{ session.get("full_name") }}
+                </strong>
+
+                <span>
+                    Owner Account
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <div class="content">
+
+
+        <a href="/owner/dashboard"
+           class="back-link">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Back to Dashboard
+
+        </a>
+
+
+        <div class="form-card">
+
+
+            <div class="form-heading">
+
+                <h2>
+                    Listing Information
+                </h2>
+
+                <p>
+                    Enter the details of the accommodation or workspace
+                    you want to list.
+                </p>
+
+            </div>
+
+
+            <form method="POST"
+                  action="/owner/add-listing"
+                  enctype="multipart/form-data">
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Listing Title
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="title"
+                               placeholder="Example: Green View Premium PG"
+                               required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Listing Category
+                            <span class="required">*</span>
+                        </label>
+
+                        <select name="listing_type"
+                                required>
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="accommodation">
+                                Accommodation
+                            </option>
+
+                            <option value="workspace">
+                                Workspace
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Property Type
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="property_type"
+                               placeholder="PG, Hostel, Flat, Coworking..."
+                               required>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Description
+                        </label>
+
+                        <textarea name="description"
+                                  placeholder="Enter a short description about your space"></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Location
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="location"
+                               placeholder="Example: Electronic City, Bengaluru"
+                               required>
+
+                        <span class="small-text">
+                            Enter the area and city where the property is located.
+                        </span>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Google Maps Location Link
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="url"
+                               name="map_link"
+                               placeholder="Paste the Google Maps link of the property"
+                               required>
+
+                        <span class="small-text">
+                            Open the exact property location in Google Maps,
+                            copy the link and paste it here.
+                        </span>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Price
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="number"
+                               name="price"
+                               min="0"
+                               step="0.01"
+                               placeholder="Example: 7500"
+                               required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Price Period
+                            <span class="required">*</span>
+                        </label>
+
+                        <select name="price_period"
+                                required>
+
+                            <option value="month">
+                                Per Month
+                            </option>
+
+                            <option value="day">
+                                Per Day
+                            </option>
+
+                            <option value="hour">
+                                Per Hour
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Facilities
+                        </label>
+
+                        <input type="text"
+                               name="facilities"
+                               placeholder="Wi-Fi, Parking, AC, Food, Security">
+
+                        <span class="small-text">
+                            Enter facilities separated by commas.
+                        </span>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Listing Image
+                        </label>
+
+                        <div class="image-box">
+
+                            <input type="file"
+                                   name="image"
+                                   accept="image/*">
+
+                        </div>
+
+                        <span class="small-text">
+                            Choose an image of your property or workspace.
+                        </span>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Availability
+                        </label>
+
+                        <div class="availability-box">
+
+                            <input type="checkbox"
+                                   id="availability"
+                                   name="availability"
+                                   checked>
+
+                            <label for="availability">
+                                This space is currently available
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-buttons">
+
+
+                    <a href="/owner/dashboard"
+                       class="cancel-button">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="submit-button">
+
+                        <i class="bi bi-plus-lg"></i>
+
+                        Add Listing
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

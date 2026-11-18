@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Properties | Smart Living & Workspace Finder</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #080d17;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 76px;
+            background: #0b111d;
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 45px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: #2563eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .brand h2 {
+            font-size: 16px;
+            line-height: 1.3;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #60a5fa;
+        }
+
+        .dashboard-btn {
+            background: #172033;
+            color: #cbd5e1;
+            border: 1px solid #293548;
+            border-radius: 8px;
+            padding: 9px 14px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .dashboard-btn:hover {
+            border-color: #3b82f6;
+            color: #60a5fa;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 45px 25px 70px;
+        }
+
+        .page-heading {
+            margin-bottom: 30px;
+        }
+
+        .small-heading {
+            color: #60a5fa;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .page-heading h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .page-heading p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .filter-box {
+            background: #101827;
+            border: 1px solid #1e293b;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .filter-group label {
+            display: block;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            height: 43px;
+            background: #0b1220;
+            color: #e2e8f0;
+            border: 1px solid #253149;
+            border-radius: 8px;
+            padding: 0 12px;
+            outline: none;
+            font-family: inherit;
+            font-size: 12px;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            border-color: #3b82f6;
+        }
+
+        .filter-group input::placeholder {
+            color: #64748b;
+        }
+
+        .search-btn {
+            height: 43px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 22px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .results-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .results-top h2 {
+            font-size: 18px;
+        }
+
+        .results-count {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .property-card {
+            background: #101827;
+            border: 1px solid #1e293b;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.25s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-3px);
+            border-color: #334155;
+        }
+
+        .image-box {
+            height: 200px;
+            background: #0b1220;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .no-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #64748b;
+            gap: 8px;
+        }
+
+        .no-image i {
+            color: #60a5fa;
+            font-size: 35px;
+        }
+
+        .type-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(8, 13, 23, 0.88);
+            color: #93c5fd;
+            border: 1px solid #334155;
+            padding: 6px 9px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .available-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(22, 101, 52, 0.9);
+            color: #bbf7d0;
+            padding: 6px 9px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .card-content {
+            padding: 19px;
+        }
+
+        .property-title {
+            color: #f8fafc;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #94a3b8;
+            font-size: 11px;
+            margin-bottom: 14px;
+        }
+
+        .location i {
+            color: #60a5fa;
+        }
+
+        .property-info {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .info-tag {
+            background: #172033;
+            border: 1px solid #253149;
+            color: #94a3b8;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+        }
+
+        .facilities {
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.6;
+            min-height: 35px;
+            margin-bottom: 17px;
+        }
+
+        .card-bottom {
+            border-top: 1px solid #1e293b;
+            padding-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .price {
+            color: #60a5fa;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .price span {
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .view-btn {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            padding: 9px 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .view-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .empty-box {
+            grid-column: 1 / -1;
+            background: #101827;
+            border: 1px dashed #334155;
+            border-radius: 15px;
+            padding: 70px 25px;
+            text-align: center;
+        }
+
+        .empty-box i {
+            display: block;
+            color: #60a5fa;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .empty-box h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .empty-box p {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        @media (max-width: 1000px) {
+
+            .filters {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+
+            .property-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .brand h2 {
+                font-size: 12px;
+            }
+
+            .nav-link {
+                display: none;
+            }
+
+            .page {
+                padding: 30px 15px 50px;
+            }
+
+            .page-heading h1 {
+                font-size: 25px;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <a href="/" class="brand">
+
+        <div class="brand-icon">
+            <i class="bi bi-buildings"></i>
+        </div>
+
+        <h2>
+            Smart Living &<br>
+            Workspace Finder
+        </h2>
+
+    </a>
+
+
+    <div class="nav-right">
+
+        <a href="/" class="nav-link">
+            Home
+        </a>
+
+
+        {% if session.get("role") == "user" %}
+
+            <a href="/dashboard"
+               class="dashboard-btn">
+
+                <i class="bi bi-grid"></i>
+                Dashboard
+
+            </a>
+
+        {% elif session.get("role") == "owner" %}
+
+            <a href="/owner/dashboard"
+               class="dashboard-btn">
+
+                <i class="bi bi-grid"></i>
+                Dashboard
+
+            </a>
+
+        {% else %}
+
+            <a href="/login"
+               class="dashboard-btn">
+
+                Login
+
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+
+<main class="page">
+
+
+    <section class="page-heading">
+
+        <div class="small-heading">
+            Explore Spaces
+        </div>
+
+        <h1>
+            Find a place that fits your needs.
+        </h1>
+
+        <p>
+            Browse available accommodation and workspace listings
+            added by property owners.
+        </p>
+
+    </section>
+
+
+    <section class="filter-box">
+
+        <form method="GET"
+              action="{{ url_for('explore') }}"
+              class="filters">
+
+
+            <div class="filter-group">
+
+                <label>
+                    Location
+                </label>
+
+                <input type="text"
+                       name="location"
+                       value="{{ location or '' }}"
+                       placeholder="e.g. Marathahalli">
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label>
+                    Category
+                </label>
+
+                <select name="listing_type">
+
+                    <option value=""
+                            {% if not listing_type %}selected{% endif %}>
+                        All
+                    </option>
+
+                    <option value="accommodation"
+                            {% if listing_type == "accommodation" %}selected{% endif %}>
+                        Accommodation
+                    </option>
+
+                    <option value="workspace"
+                            {% if listing_type == "workspace" %}selected{% endif %}>
+                        Workspace
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label>
+                    Property Type
+                </label>
+
+                <select name="property_type">
+
+                    <option value=""
+                            {% if not property_type %}selected{% endif %}>
+                        All Types
+                    </option>
+
+                    <option value="PG"
+                            {% if property_type == "PG" %}selected{% endif %}>
+                        PG
+                    </option>
+
+                    <option value="Hostel"
+                            {% if property_type == "Hostel" %}selected{% endif %}>
+                        Hostel
+                    </option>
+
+                    <option value="Room"
+                            {% if property_type == "Room" %}selected{% endif %}>
+                        Room
+                    </option>
+
+                    <option value="Flat"
+                            {% if property_type == "Flat" %}selected{% endif %}>
+                        Flat / Apartment
+                    </option>
+
+                    <option value="Co-living"
+                            {% if property_type == "Co-living" %}selected{% endif %}>
+                        Co-living
+                    </option>
+
+                    <option value="Coworking Space"
+                            {% if property_type == "Coworking Space" %}selected{% endif %}>
+                        Coworking Space
+                    </option>
+
+                    <option value="Study Space"
+                            {% if property_type == "Study Space" %}selected{% endif %}>
+                        Study Space
+                    </option>
+
+                    <option value="Private Office"
+                            {% if property_type == "Private Office" %}selected{% endif %}>
+                        Private Office
+                    </option>
+
+                    <option value="Meeting Room"
+                            {% if property_type == "Meeting Room" %}selected{% endif %}>
+                        Meeting Room
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label>
+                    Maximum Price
+                </label>
+
+                <input type="number"
+                       name="max_price"
+                       min="0"
+                       value="{{ max_price or '' }}"
+                       placeholder="e.g. 15000">
+
+            </div>
+
+
+            <input type="submit"
+                   class="search-btn"
+                   value="Search">
+
+
+        </form>
+
+    </section>
+
+
+    <div class="results-top">
+
+        <h2>
+            Available Properties
+        </h2>
+
+        <span class="results-count">
+
+            {% if listings %}
+
+                {{ listings|length }} properties found
+
+            {% else %}
+
+                0 properties found
+
+            {% endif %}
+
+        </span>
+
+    </div>
+
+
+    <section class="property-grid">
+
+
+        {% if listings %}
+
+
+            {% for listing in listings %}
+
+
+                <article class="property-card">
+
+
+                    <div class="image-box">
+
+
+                        {% if listing.image_path %}
+
+                            <img src="{{ url_for('static', filename=listing.image_path) }}"
+                                 alt="{{ listing.title }}">
+
+                        {% else %}
+
+                            <div class="no-image">
+
+                                {% if listing.listing_type == "accommodation" %}
+
+                                    <i class="bi bi-house-door"></i>
+
+                                {% else %}
+
+                                    <i class="bi bi-building"></i>
+
+                                {% endif %}
+
+                                <span>
+                                    No Image
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <span class="type-badge">
+                            {{ listing.property_type }}
+                        </span>
+
+
+                        <span class="available-badge">
+                            Available
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="card-content">
+
+
+                        <h3 class="property-title">
+                            {{ listing.title }}
+                        </h3>
+
+
+                        <div class="location">
+
+                            <i class="bi bi-geo-alt-fill"></i>
+
+                            {{ listing.location }}
+
+                        </div>
+
+
+                        <div class="property-info">
+
+                            <span class="info-tag">
+                                {{ listing.listing_type | title }}
+                            </span>
+
+                            <span class="info-tag">
+                                {{ listing.property_type }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="facilities">
+
+                            {% if listing.facilities %}
+
+                                <i class="bi bi-check-circle"></i>
+
+                                {{ listing.facilities }}
+
+                            {% else %}
+
+                                Facilities not specified
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="card-bottom">
+
+
+                            <div class="price">
+
+                                ₹{{ listing.price }}
+
+                                <span>
+                                    / {{ listing.price_period }}
+                                </span>
+
+                            </div>
+
+
+                            <a href="{{ url_for('listing_details', listing_id=listing.listing_id) }}"
+                               class="view-btn">
+
+                                View Details
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </article>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="empty-box">
+
+                <i class="bi bi-buildings"></i>
+
+                <h3>
+                    No properties found
+                </h3>
+
+                <p>
+                    Try changing your search filters.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

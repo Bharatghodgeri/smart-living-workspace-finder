@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Create Account | Smart Living & Workspace Finder
+    </title>
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        /* ===============================
+           GLOBAL
+        ================================ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            font-family: 'Inter', sans-serif;
+
+            background: #080d17;
+
+            color: #f8fafc;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* ===============================
+           PAGE
+        ================================ */
+
+        .page {
+            min-height: 100vh;
+
+            display: grid;
+
+            grid-template-columns: 1.05fr 0.95fr;
+        }
+
+
+        /* ===============================
+           LEFT SIDE
+        ================================ */
+
+        .visual-side {
+            min-height: 100vh;
+
+            position: relative;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            padding: 45px 55px;
+
+            overflow: hidden;
+
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(5, 10, 20, 0.97),
+                    rgba(5, 10, 20, 0.72)
+                ),
+
+                url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=90");
+
+
+            background-size: cover;
+
+            background-position: center;
+        }
+
+
+        .visual-side::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 450px;
+
+            height: 450px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(37, 99, 235, 0.18);
+
+            filter: blur(50px);
+
+            left: -170px;
+
+            bottom: -170px;
+        }
+
+
+        .visual-side::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(59, 130, 246, 0.10);
+
+            filter: blur(50px);
+
+            right: -100px;
+
+            top: -100px;
+        }
+
+
+        /* ===============================
+           LOGO
+        ================================ */
+
+        .logo {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            width: fit-content;
+        }
+
+
+        .logo-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #3b82f6
+                );
+
+            border-radius: 12px;
+
+            font-size: 21px;
+
+            box-shadow:
+                0 8px 25px rgba(37, 99, 235, 0.30);
+        }
+
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+
+        /* ===============================
+           LEFT CONTENT
+        ================================ */
+
+        .visual-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 590px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .visual-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 8px 14px;
+
+            margin-bottom: 22px;
+
+            border-radius: 30px;
+
+            background:
+                rgba(37, 99, 235, 0.15);
+
+            border:
+                1px solid rgba(96, 165, 250, 0.25);
+
+            color: #93c5fd;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .visual-content h1 {
+
+            max-width: 550px;
+
+            color: white;
+
+            font-size: 48px;
+
+            line-height: 1.12;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .visual-content h1 span {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #bfdbfe
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        .visual-content > p {
+
+            max-width: 500px;
+
+            color: #a9b5c7;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* ===============================
+           BENEFITS
+        ================================ */
+
+        .benefits {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 14px;
+
+            max-width: 520px;
+        }
+
+
+        .benefit {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: #d7e0ec;
+
+            font-size: 12px;
+        }
+
+
+        .benefit-icon {
+
+            min-width: 34px;
+
+            width: 34px;
+
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(37, 99, 235, 0.16);
+
+            border:
+                1px solid rgba(96, 165, 250, 0.18);
+
+            color: #60a5fa;
+        }
+
+
+        /* ===============================
+           LEFT FOOTER
+        ================================ */
+
+        .left-footer {
+
+            position: relative;
+
+            z-index: 2;
+
+            color: #6e7c91;
+
+            font-size: 11px;
+        }
+
+
+        /* ===============================
+           RIGHT SIDE
+        ================================ */
+
+        .form-side {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 45px;
+
+            position: relative;
+
+            background:
+
+                radial-gradient(
+                    circle at top right,
+                    rgba(37, 99, 235, 0.08),
+                    transparent 35%
+                ),
+
+                #080d17;
+        }
+
+
+        .form-side::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            bottom: 0;
+
+            width: 1px;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    #27344a,
+                    transparent
+                );
+        }
+
+
+        .form-wrapper {
+
+            width: 100%;
+
+            max-width: 470px;
+        }
+
+
+        /* ===============================
+           BACK BUTTON
+        ================================ */
+
+        .back-home {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #77869b;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-bottom: 30px;
+
+            transition: 0.25s;
+        }
+
+
+        .back-home:hover {
+            color: #60a5fa;
+        }
+
+
+        /* ===============================
+           FORM HEADER
+        ================================ */
+
+        .form-header {
+
+            margin-bottom: 28px;
+        }
+
+
+        .form-header h2 {
+
+            color: white;
+
+            font-size: 31px;
+
+            letter-spacing: -0.7px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .form-header p {
+
+            color: #718096;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ===============================
+           FORM
+        ================================ */
+
+        .form-group {
+
+            margin-bottom: 17px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            color: #c8d2df;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+
+        .input-box {
+
+            position: relative;
+        }
+
+
+        .input-box i {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #607089;
+
+            font-size: 15px;
+
+            pointer-events: none;
+        }
+
+
+        .input-box input,
+        .input-box select {
+
+            width: 100%;
+
+            height: 49px;
+
+            padding: 0 15px 0 43px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid #253147;
+
+            outline: none;
+
+            background: #101827;
+
+            color: #e5edf7;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            transition: 0.25s;
+        }
+
+
+        .input-box input::placeholder {
+
+            color: #536176;
+        }
+
+
+        .input-box select {
+
+            cursor: pointer;
+
+            appearance: none;
+        }
+
+
+        .input-box select option {
+
+            background: #101827;
+
+            color: white;
+        }
+
+
+        .input-box input:focus,
+        .input-box select:focus {
+
+            border-color: #3b82f6;
+
+            background: #111c2d;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+
+        .input-box:focus-within i {
+
+            color: #60a5fa;
+        }
+
+
+        /* ===============================
+           PASSWORD ROW
+        ================================ */
+
+        .password-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 14px;
+        }
+
+
+        /* ===============================
+           TERMS
+        ================================ */
+
+        .terms {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 9px;
+
+            margin: 20px 0;
+        }
+
+
+        .terms input {
+
+            margin-top: 2px;
+
+            accent-color: #2563eb;
+
+            cursor: pointer;
+        }
+
+
+        .terms label {
+
+            color: #718096;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            cursor: pointer;
+        }
+
+
+        .terms a {
+
+            color: #60a5fa;
+        }
+
+
+        /* ===============================
+           REGISTER BUTTON
+        ================================ */
+
+        .register-btn {
+
+            width: 100%;
+
+            height: 50px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #3b82f6
+                );
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .register-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(37, 99, 235, 0.28);
+        }
+
+
+        /* ===============================
+           LOGIN
+        ================================ */
+
+        .login-text {
+
+            text-align: center;
+
+            color: #718096;
+
+            font-size: 12px;
+
+            margin-top: 23px;
+        }
+
+
+        .login-text a {
+
+            color: #60a5fa;
+
+            font-weight: 700;
+
+            margin-left: 3px;
+        }
+
+
+        .login-text a:hover {
+
+            color: #93c5fd;
+        }
+
+
+        /* ===============================
+           SECURITY MESSAGE
+        ================================ */
+
+        .security {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 6px;
+
+            color: #536176;
+
+            font-size: 10px;
+
+            margin-top: 24px;
+        }
+
+
+        .security i {
+            color: #3b82f6;
+        }
+
+
+        /* ===============================
+           RESPONSIVE
+        ================================ */
+
+        @media (max-width: 950px) {
+
+            .page {
+                grid-template-columns: 1fr;
+            }
+
+
+            .visual-side {
+
+                min-height: auto;
+
+                padding: 30px;
+
+                background:
+
+                    linear-gradient(
+                        rgba(5, 10, 20, 0.90),
+                        rgba(5, 10, 20, 0.94)
+                    ),
+
+                    url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85");
+
+                background-size: cover;
+
+                background-position: center;
+            }
+
+
+            .visual-content {
+
+                margin-top: 80px;
+
+                margin-bottom: 20px;
+            }
+
+
+            .visual-content h1 {
+
+                font-size: 39px;
+            }
+
+
+            .left-footer {
+                display: none;
+            }
+
+
+            .form-side {
+
+                min-height: auto;
+
+                padding: 55px 25px;
+            }
+
+
+            .form-side::before {
+                display: none;
+            }
+        }
+
+
+        @media (max-width: 550px) {
+
+            .visual-side {
+
+                padding: 22px;
+            }
+
+
+            .logo {
+
+                font-size: 13px;
+            }
+
+
+            .logo-icon {
+
+                width: 38px;
+
+                height: 38px;
+            }
+
+
+            .visual-content {
+
+                margin-top: 60px;
+            }
+
+
+            .visual-content h1 {
+
+                font-size: 34px;
+            }
+
+
+            .benefits {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .form-side {
+
+                padding: 40px 20px;
+            }
+
+
+            .password-row {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .form-header h2 {
+
+                font-size: 27px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- ===============================
+         LEFT SIDE
+    ================================ -->
+
+    <section class="visual-side">
+
+
+        <!-- LOGO -->
+
+        <a href="/" class="logo">
+
+            <div class="logo-icon">
+
+                <i class="bi bi-buildings"></i>
+
+            </div>
+
+            Smart Living
+
+            <span>
+                & Workspace Finder
+            </span>
+
+        </a>
+
+
+        <!-- CONTENT -->
+
+        <div class="visual-content">
+
+
+            <div class="visual-badge">
+
+                <i class="bi bi-stars"></i>
+
+                FIND YOUR PERFECT SPACE
+
+            </div>
+
+
+            <h1>
+
+                One account.
+
+                <span>
+                    Endless possibilities.
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                Create your account to discover accommodations
+                and workspaces that match your location,
+                budget and requirements.
+
+            </p>
+
+
+            <!-- BENEFITS -->
+
+            <div class="benefits">
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+
+                        <i class="bi bi-search"></i>
+
+                    </div>
+
+                    Find suitable spaces
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+
+                        <i class="bi bi-sliders"></i>
+
+                    </div>
+
+                    Search with filters
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+
+                        <i class="bi bi-calendar-check"></i>
+
+                    </div>
+
+                    Manage bookings
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+
+                        <i class="bi bi-star"></i>
+
+                    </div>
+
+                    Reviews & ratings
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="left-footer">
+
+            © 2026 Smart Living & Workspace Finder
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ===============================
+         RIGHT SIDE
+    ================================ -->
+
+    <section class="form-side">
+
+
+        <div class="form-wrapper">
+
+
+            <!-- BACK -->
+
+            <a href="/"
+               class="back-home">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Back to Home
+
+            </a>
+
+
+            <!-- HEADER -->
+
+            <div class="form-header">
+
+                <h2>
+                    Create your account
+                </h2>
+
+                <p>
+
+                    Join Smart Living & Workspace Finder
+                    and start discovering your ideal space.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- ===============================
+                 REGISTRATION FORM
+            ================================ -->
+
+            <form method="POST"
+                  action="/register">
+
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <label for="full_name">
+
+                        FULL NAME
+
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <i class="bi bi-person"></i>
+
+                        <input
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+
+                        EMAIL ADDRESS
+
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <i class="bi bi-envelope"></i>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ROLE -->
+
+                <div class="form-group">
+
+                    <label for="role">
+
+                        ACCOUNT TYPE
+
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <i class="bi bi-person-badge"></i>
+
+                        <select
+                            id="role"
+                            name="role"
+                            required
+                        >
+
+                            <option value=""
+                                    disabled
+                                    selected>
+
+                                Select account type
+
+                            </option>
+
+
+                            <option value="user">
+
+                                User - Find a Space
+
+                            </option>
+
+
+                            <option value="owner">
+
+                                Owner - List a Space
+
+                            </option>
+
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PASSWORDS -->
+
+                <div class="password-row">
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+
+                            PASSWORD
+
+                        </label>
+
+
+                        <div class="input-box">
+
+                            <i class="bi bi-lock"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="confirm_password">
+
+                            CONFIRM PASSWORD
+
+                        </label>
+
+
+                        <div class="input-box">
+
+                            <i class="bi bi-shield-lock"></i>
+
+                            <input
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                placeholder="Confirm password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- TERMS -->
+
+                <div class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required
+                    >
+
+
+                    <label for="terms">
+
+                        I agree to the
+
+                        <a href="#">
+                            Terms & Conditions
+                        </a>
+
+                        and
+
+                        <a href="#">
+                            Privacy Policy
+                        </a>.
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="register-btn"
+                >
+
+                    Create Account
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- LOGIN -->
+
+            <div class="login-text">
+
+                Already have an account?
+
+                <a href="#">
+                    Login
+                </a>
+
+            </div>
+
+
+
+            <!-- SECURITY -->
+
+            <div class="security">
+
+                <i class="bi bi-shield-check"></i>
+
+                Your information is securely protected
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+</body>
+
+</html>

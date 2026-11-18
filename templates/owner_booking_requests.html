@@ -1,0 +1,843 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Booking Requests | Smart Living & Workspace Finder</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #080d17;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #101827;
+            border-bottom: 1px solid #1e293b;
+            padding: 20px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .brand {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .brand i {
+            color: #60a5fa;
+            margin-right: 8px;
+        }
+
+        .back-link {
+            color: #94a3b8;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #60a5fa;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 40px 20px 70px;
+        }
+
+        .page-header {
+            margin-bottom: 28px;
+        }
+
+        .page-header h1 {
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: #101827;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .stat-card h3 {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .stat-card strong {
+            color: #fff;
+            font-size: 26px;
+        }
+
+        .requests {
+            display: grid;
+            gap: 20px;
+        }
+
+        .booking-card {
+            background: #101827;
+            border: 1px solid #253149;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .booking-top {
+            padding: 22px;
+            border-bottom: 1px solid #253149;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .booking-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .location {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .location i {
+            color: #60a5fa;
+        }
+
+        .status {
+            border-radius: 20px;
+            padding: 7px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .status-pending {
+            color: #fbbf24;
+            background: rgba(245,158,11,.12);
+        }
+
+        .status-confirmed {
+            color: #4ade80;
+            background: rgba(34,197,94,.12);
+        }
+
+        .status-cancelled {
+            color: #f87171;
+            background: rgba(239,68,68,.12);
+        }
+
+        .status-completed {
+            color: #93c5fd;
+            background: rgba(59,130,246,.12);
+        }
+
+        .booking-body {
+            padding: 22px;
+        }
+
+        .booking-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .detail-label {
+            color: #64748b;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            color: #e2e8f0;
+            font-size: 13px;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+
+        .payment-info {
+            background: #0b1220;
+            border: 1px solid #253149;
+            border-radius: 9px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .payment-info h4 {
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .payment-info p {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .payment-info strong {
+            color: #e2e8f0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .actions form {
+            flex: 1;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 9px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn-accept {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background: #15803d;
+        }
+
+        .btn-reject {
+            background: rgba(239,68,68,.12);
+            border: 1px solid rgba(239,68,68,.35);
+            color: #f87171;
+        }
+
+        .btn-reject:hover {
+            background: rgba(239,68,68,.22);
+        }
+
+        .booking-message {
+            margin-top: 18px;
+            color: #94a3b8;
+            background: #0b1220;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .booking-message i {
+            color: #60a5fa;
+            margin-right: 5px;
+        }
+
+        .flash {
+            padding: 14px 16px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+        .flash-success {
+            background: rgba(34,197,94,.12);
+            color: #4ade80;
+            border: 1px solid rgba(34,197,94,.25);
+        }
+
+        .flash-error {
+            background: rgba(239,68,68,.12);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,.25);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 70px 20px;
+            background: #101827;
+            border: 1px solid #253149;
+            border-radius: 15px;
+        }
+
+        .empty-state i {
+            font-size: 45px;
+            color: #60a5fa;
+        }
+
+        .empty-state h3 {
+            margin: 15px 0 10px;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* CUSTOM CONFIRMATION POPUP */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 410px;
+            background: #101827;
+            border: 1px solid #253149;
+            border-radius: 18px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(0,0,0,.5);
+        }
+
+        .modal-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 20px;
+        }
+
+        .modal-icon.accept {
+            background: rgba(34,197,94,.12);
+            color: #4ade80;
+        }
+
+        .modal-icon.reject {
+            background: rgba(239,68,68,.12);
+            color: #f87171;
+        }
+
+        .modal-box h2 {
+            font-size: 21px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .modal-box p {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            border: none;
+            border-radius: 9px;
+            padding: 13px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-cancel {
+            background: #1e293b;
+            color: #cbd5e1;
+        }
+
+        .modal-confirm.accept {
+            background: #16a34a;
+            color: white;
+        }
+
+        .modal-confirm.reject {
+            background: #dc2626;
+            color: white;
+        }
+
+        .modal-confirm:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 18px 20px;
+            }
+
+            .brand {
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 25px 15px;
+            }
+
+            .page-header h1 {
+                font-size: 22px;
+            }
+
+            .stats {
+                gap: 8px;
+            }
+
+            .stat-card {
+                padding: 14px;
+            }
+
+            .stat-card strong {
+                font-size: 21px;
+            }
+
+            .booking-details {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .booking-top {
+                flex-direction: column;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('owner_dashboard') }}" class="brand">
+            <i class="bi bi-buildings"></i>
+            Smart Living & Workspace Finder
+        </a>
+
+        <a href="{{ url_for('owner_dashboard') }}" class="back-link">
+            <i class="bi bi-arrow-left"></i>
+            Back to Dashboard
+        </a>
+    </nav>
+
+    <main class="container">
+
+        <div class="page-header">
+            <h1>
+                <i class="bi bi-calendar-check" style="color:#60a5fa"></i>
+                Booking Requests
+            </h1>
+
+            <p>
+                Accept or reject bookings made without payment.
+                Online paid bookings are confirmed automatically.
+            </p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash {{ 'flash-success' if category == 'success' else 'flash-error' }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        {% set pending_count = booking_requests
+            | selectattr('status', 'equalto', 'pending')
+            | list | length %}
+
+        {% set confirmed_count = booking_requests
+            | selectattr('status', 'equalto', 'confirmed')
+            | list | length %}
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Bookings</h3>
+                <strong>{{ booking_requests | length }}</strong>
+            </div>
+
+            <div class="stat-card">
+                <h3>Pending</h3>
+                <strong style="color:#fbbf24">{{ pending_count }}</strong>
+            </div>
+
+            <div class="stat-card">
+                <h3>Confirmed</h3>
+                <strong style="color:#4ade80">{{ confirmed_count }}</strong>
+            </div>
+        </div>
+
+        {% if booking_requests %}
+
+            <div class="requests">
+
+                {% for booking in booking_requests %}
+
+                    <div class="booking-card">
+
+                        <div class="booking-top">
+                            <div>
+                                <h2 class="booking-title">
+                                    {{ booking.title }}
+                                </h2>
+
+                                <p class="location">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                    {{ booking.location }}
+                                </p>
+                            </div>
+
+                            <span class="status status-{{ booking.status }}">
+                                {{ booking.status | title }}
+                            </span>
+                        </div>
+
+                        <div class="booking-body">
+
+                            <div class="booking-details">
+
+                                <div>
+                                    <p class="detail-label">Customer Name</p>
+                                    <p class="detail-value">
+                                        {{ booking.user_name }}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="detail-label">Customer Email</p>
+                                    <p class="detail-value">
+                                        {{ booking.user_email }}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="detail-label">Property Type</p>
+                                    <p class="detail-value">
+                                        {{ booking.property_type }}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="detail-label">Booking ID</p>
+                                    <p class="detail-value">
+                                        #{{ booking.booking_id }}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="detail-label">Start Date</p>
+                                    <p class="detail-value">
+                                        {{ booking.start_date.strftime('%d %B %Y') }}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p class="detail-label">End Date</p>
+                                    <p class="detail-value">
+                                        {% if booking.end_date %}
+                                            {{ booking.end_date.strftime('%d %B %Y') }}
+                                        {% else %}
+                                            Not specified
+                                        {% endif %}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="payment-info">
+                                <h4>
+                                    <i class="bi bi-wallet2" style="color:#60a5fa"></i>
+                                    Payment Details
+                                </h4>
+
+                                <p>
+                                    Booking Type:
+                                    <strong>
+                                        {% if booking.booking_type == 'request' %}
+                                            Without Payment (₹0)
+                                        {% elif booking.paid_amount >= booking.total_amount %}
+                                            Full Payment
+                                        {% else %}
+                                            Advance Payment
+                                        {% endif %}
+                                    </strong>
+                                </p>
+
+                                <p>
+                                    Total Amount:
+                                    <strong>₹{{ booking.total_amount }}</strong>
+                                </p>
+
+                                <p>
+                                    Paid Amount:
+                                    <strong>₹{{ booking.paid_amount }}</strong>
+                                </p>
+
+                                <p>
+                                    Payment Status:
+                                    <strong>
+                                        {{ booking.payment_status | replace('_', ' ') | title }}
+                                    </strong>
+                                </p>
+                            </div>
+
+                            {% if (
+                                booking.status == 'pending'
+                                and booking.booking_type == 'request'
+                                and booking.payment_status == 'not_paid'
+                            ) %}
+
+                                <div class="actions">
+
+                                    <form
+                                        action="{{ url_for('accept_booking', booking_id=booking.booking_id) }}"
+                                        method="POST"
+                                        id="accept-form-{{ booking.booking_id }}"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="btn btn-accept"
+                                            onclick="openConfirm('accept', 'accept-form-{{ booking.booking_id }}')"
+                                        >
+                                            <i class="bi bi-check-circle"></i>
+                                            Accept Booking
+                                        </button>
+                                    </form>
+
+                                    <form
+                                        action="{{ url_for('reject_booking', booking_id=booking.booking_id) }}"
+                                        method="POST"
+                                        id="reject-form-{{ booking.booking_id }}"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="btn btn-reject"
+                                            onclick="openConfirm('reject', 'reject-form-{{ booking.booking_id }}')"
+                                        >
+                                            <i class="bi bi-x-circle"></i>
+                                            Reject Booking
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                            {% elif booking.status == 'confirmed' %}
+
+                                <div class="booking-message">
+                                    <i class="bi bi-check-circle-fill" style="color:#4ade80"></i>
+
+                                    {% if booking.payment_status == 'paid' %}
+                                        Payment successful. Booking automatically confirmed.
+                                        No owner approval required.
+                                    {% else %}
+                                        Booking accepted by owner.
+                                        The property is now reserved.
+                                    {% endif %}
+                                </div>
+
+                            {% elif booking.status == 'cancelled' %}
+
+                                <div class="booking-message">
+                                    <i class="bi bi-x-circle" style="color:#f87171"></i>
+                                    This booking has been cancelled or rejected.
+                                </div>
+
+                            {% elif booking.status == 'pending' %}
+
+                                <div class="booking-message">
+                                    <i class="bi bi-hourglass-split"></i>
+                                    Online payment is pending verification.
+                                    No owner action is required.
+                                </div>
+
+                            {% else %}
+
+                                <div class="booking-message">
+                                    <i class="bi bi-info-circle"></i>
+                                    Booking status: {{ booking.status | title }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <i class="bi bi-calendar-x"></i>
+                <h3>No Bookings Yet</h3>
+                <p>Customer bookings will appear here.</p>
+            </div>
+
+        {% endif %}
+
+    </main>
+
+    <!-- CUSTOM DARK THEME CONFIRMATION POPUP -->
+
+    <div class="modal-overlay" id="confirmModal">
+
+        <div class="modal-box" role="dialog" aria-modal="true"
+             aria-labelledby="modalTitle">
+
+            <div class="modal-icon accept" id="modalIcon">
+                <i class="bi bi-check-circle" id="modalIconSymbol"></i>
+            </div>
+
+            <h2 id="modalTitle">Confirm Booking</h2>
+
+            <p id="modalMessage">
+                Are you sure you want to continue?
+            </p>
+
+            <div class="modal-actions">
+                <button
+                    type="button"
+                    class="modal-cancel"
+                    onclick="closeConfirm()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-confirm accept"
+                    id="modalConfirmButton"
+                    onclick="submitBookingAction()"
+                >
+                    Confirm
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let selectedFormId = null;
+
+        function openConfirm(type, formId) {
+            selectedFormId = formId;
+
+            const modal = document.getElementById("confirmModal");
+            const icon = document.getElementById("modalIcon");
+            const symbol = document.getElementById("modalIconSymbol");
+            const title = document.getElementById("modalTitle");
+            const message = document.getElementById("modalMessage");
+            const button = document.getElementById("modalConfirmButton");
+
+            button.disabled = false;
+
+            if (type === "accept") {
+                icon.className = "modal-icon accept";
+                symbol.className = "bi bi-check-circle";
+                title.textContent = "Accept Booking?";
+                message.textContent =
+                    "This booking will be confirmed and the property will become unavailable.";
+                button.className = "modal-confirm accept";
+                button.textContent = "Yes, Accept";
+            } else {
+                icon.className = "modal-icon reject";
+                symbol.className = "bi bi-x-circle";
+                title.textContent = "Reject Booking?";
+                message.textContent =
+                    "This booking request will be cancelled. The property will remain available.";
+                button.className = "modal-confirm reject";
+                button.textContent = "Yes, Reject";
+            }
+
+            modal.classList.add("show");
+            button.focus();
+        }
+
+        function closeConfirm() {
+            document.getElementById("confirmModal").classList.remove("show");
+            selectedFormId = null;
+        }
+
+        function submitBookingAction() {
+            if (!selectedFormId) return;
+
+            const form = document.getElementById(selectedFormId);
+            if (!form) return;
+
+            const button = document.getElementById("modalConfirmButton");
+            button.disabled = true;
+            button.textContent = "Processing...";
+
+            form.submit();
+        }
+
+        document.getElementById("confirmModal")
+            .addEventListener("click", function(event) {
+                if (event.target === this) {
+                    closeConfirm();
+                }
+            });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                closeConfirm();
+            }
+        });
+    </script>
+
+</body>
+</html>
